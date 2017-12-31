@@ -1,5 +1,5 @@
 # Database Functional Dependencies to 3-Normal Form Converter
-## By Nour Alhadi Mahmoud
+## By Nour Alhadi Mahmoud && Rahaf Badour
 
 This Java App Will help you to convert database functional dependencies that is not normal and make it 3-Normal Form.  
 
