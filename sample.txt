@@ -1,0 +1,8 @@
+set:
+	a b c d
+---------
+relations:
+	a -> b d
+	a b -> d
+	a -> d
+	b -> c
