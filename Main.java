@@ -3,7 +3,6 @@ package database;
 import java.awt.Color;
 
 public class Main extends javax.swing.JFrame {
-    
     public Main() {
         initComponents();
         this.setResizable(false);
@@ -34,21 +33,13 @@ public class Main extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jLabel1.setText("مشروع قواعد المعطيات 2");
-
         jLabel2.setText("جامعة تشرين - كلية الهندسة المعلوماتية ");
-
         jLabel3.setText("إشراف");
-
         jLabel4.setText("الدكتور أنور أبو  نقطة");
-
         jLabel5.setText("تقديم");
-
         jLabel6.setText("رهف بدور");
-
         jLabel7.setText("نور الهادي محمود");
-
         member.setText("العضوية");
         member.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -4,7 +4,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class Key extends javax.swing.JFrame {
-
     public Key(Main m) {
         initComponents();
         this.setResizable(false);
@@ -13,11 +12,9 @@ public class Key extends javax.swing.JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.main = m;
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();

@@ -4,11 +4,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-public class Helper {
-    
+public class Helper {    
     private String SetU;
     private HashSet<String> Relations;
-    
     // Getters & Setters (With simple Validation)
     public String getSetU(){
         return this.SetU;
@@ -25,11 +23,9 @@ public class Helper {
         if (!valid) s = "!";
         return this.SetU = s;
     }
-    
     public HashSet<String> getRelations(){
         return this.Relations;
     }
-    
     public HashSet<String> setRelations(HashSet<String> rel){
         boolean valid = true;
         for (String s:rel){
@@ -159,7 +155,6 @@ public class Helper {
         }
         return ans;
     }
-    
     // return the schema of the FD's
     public String getSchema(){
         HashMap<String,HashSet<String> > ret = new HashMap<>();
@@ -186,6 +181,5 @@ public class Helper {
         }
         ans += "</html>";
         return ans;
-    }
-    
+    }   
 }
