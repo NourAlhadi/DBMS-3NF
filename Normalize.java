@@ -25,11 +25,11 @@ public class Normalize {
     // End of Getters and Setters
     
     // Exclude A Relation from relations set
-    public HashSet<String> excRelation(HashSet<String>rel,int idx){
+    public HashSet<String> excRelation(HashSet<String>rel,String tar){
         HashSet<String> ret = new HashSet<>();
         int id = 0;
         for (String s:rel){
-            if (id != idx) ret.add(s);
+            if (!s.equals(tar)) ret.add(s);
             id++;
         }
         return ret;
@@ -57,7 +57,7 @@ public class Normalize {
         }
         return ret;
     }
-
+    
     private HashSet<String> getRightFix(String s) {
         HashSet<String> ret = new HashSet<>();
         
@@ -76,20 +76,18 @@ public class Normalize {
     public HashSet<String> getLeftReduction(){
         HashSet<String> Start = getRightMinimal();
         HashSet<String> ret = new HashSet<>();
-        int idx = 0;
         for (String rel:Start){
             String l = rel.substring(0,rel.indexOf('-'));
             String r = rel.substring(rel.indexOf('>')+1,rel.length());
-            ret.add(getLeftFix(l,r,Start,idx));
-            idx++;
+            ret.add(getLeftFix(l,r,Start,rel));
         }
         return ret;
     }
 
-    private String getLeftFix(String l, String r,HashSet<String> rel, int idx) {
+    private String getLeftFix(String l, String r,HashSet<String> rel, String tar) {
         String ret = l + "->" + r;
         Helper h = new Helper();
-        HashSet<String> nRel = excRelation(rel,idx);
+        HashSet<String> nRel = excRelation(rel,tar);
         h.setSetU(this.SetU);
         h.setRelations(nRel);
         char a = '#',b = '#';
@@ -112,22 +110,45 @@ public class Normalize {
         HashSet<String> ret = getLeftReduction();
         while (true){
             int cnt = ret.size();
-            int idx = 0;
             for (String rel : ret){
-                HashSet<String> rm = excRelation(ret,idx);
-                String l = rel.substring(0,rel.indexOf('-'));
-                String r = rel.substring(rel.indexOf('>')+1,rel.length());
-                Helper help = new Helper();
-                help.setSetU(this.SetU);
-                help.setRelations(rm);
-                String close = help.getClosure(l);
-                idx++;
-                if (close.indexOf(firstChar(r)) == -1) continue; 
-                ret = rm;
+                ret = checkRemove(rel,rel,ret);
             }
             if (ret.size() == cnt) break;
         }
         return ret;
+    }
+    
+    public HashSet<String> checkRemove(String rel,String tar,HashSet<String> curr){
+        HashSet<String> ret = excRelation(curr, tar);
+        Helper h = new Helper();
+        h.setSetU(this.SetU);
+        h.setRelations(ret);
+        String l = rel.substring(0,rel.indexOf('-'));
+        String r = rel.substring(rel.indexOf('>')+1,rel.length());
+        String close = h.getClosure(l);
+        boolean ch = checkCover(close,r);
+        if (ch) return ret;
+        return curr;
+    }
+    
+    public boolean checkCover(String a,String b){
+        int diff[] = new int [27];
+        int ret = 0;
+        
+        for (int i=0;i<b.length();i++) {
+            char c = b.charAt(i);
+            if (c < 'A' || c > 'Z') continue;
+            diff[c-'A']++;
+        }
+        
+        for (int i=0;i<a.length();i++) {
+            char c = a.charAt(i);
+            if (c < 'A' || c > 'Z') continue;
+            if (diff[c-'A'] != 0) diff[c-'A']--;
+        }
+        
+        for (int i=0;i<27;i++) ret += diff[i];
+        return ret == 0;
     }
     
     // return the schema of the FD's
@@ -137,7 +158,6 @@ public class Normalize {
         h.setSetU(SetU);
         HashSet<String> rels = h.setRelations(getNonRedundant());
         for (String rel: rels){
-            System.out.println("Normalizer: " + rel);
             String l = rel.substring(0,rel.indexOf('-'));
             String r = rel.substring(rel.indexOf('>')+1,rel.length());
             String key = h.getClosure(l);

@@ -164,7 +164,6 @@ public class Helper {
     public String getSchema(){
         HashMap<String,HashSet<String> > ret = new HashMap<>();
         for (String rel: Relations){
-            System.out.println("Helper: " + rel);
             String l = rel.substring(0,rel.indexOf('-'));
             String r = rel.substring(rel.indexOf('>')+1,rel.length());
             String key = getClosure(l);
